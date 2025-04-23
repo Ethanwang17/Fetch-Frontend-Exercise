@@ -39,7 +39,7 @@ function App() {
 						}}
 					>
 						<Title level={3} style={{color: "black", margin: 0}}>
-							Dog Adoption Search
+							TESTING
 						</Title>
 						<Button onClick={handleLogout} type="primary" danger>
 							Logout
