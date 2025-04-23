@@ -49,6 +49,16 @@
 	background-color: #d32f2f;
 }
 
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-size: 1.5rem;
+	color: #555;
+	background: linear-gradient(to bottom, #f74370, #ff7e5f, #ffb160);
+}
+
 .search-page main {
 	flex: 1;
 	padding: 2rem;
