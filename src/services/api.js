@@ -6,9 +6,6 @@ const request = async (endpoint, options = {}) => {
 		credentials: "include", // Include cookies for authentication
 		headers: {
 			"Content-Type": "application/json",
-			// Add cache control to prevent caching issues across sessions
-			"Cache-Control": "no-cache, no-store, must-revalidate",
-			Pragma: "no-cache",
 		},
 		...options,
 	};
@@ -27,14 +24,6 @@ const request = async (endpoint, options = {}) => {
 		if (!response.ok) {
 			const error = new Error(`API Error: ${response.status}`);
 			error.status = response.status;
-
-			// Handle authentication errors explicitly
-			if (response.status === 401) {
-				console.error("Authentication error - please log in again");
-				// If this is a client-side navigation app, you might want to redirect to login
-				// window.location.href = "/"; // Uncomment if you want automatic redirect
-			}
-
 			throw error;
 		}
 
@@ -69,16 +58,6 @@ export const authAPI = {
 	logout: () =>
 		request("/auth/logout", {
 			method: "POST",
-		}),
-
-	// Check if the user is already authenticated
-	checkAuth: () =>
-		request("/auth/check", {
-			method: "GET",
-		}).catch((error) => {
-			// Silently handle auth check errors
-			console.log("Auth check failed:", error);
-			return false;
 		}),
 };
 

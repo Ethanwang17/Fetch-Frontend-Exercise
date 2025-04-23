@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import "../styles/App.css";
 import LoginPage from "./LoginPage";
 import SearchPage from "./SearchPage";
@@ -10,23 +10,6 @@ const {Title} = Typography;
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		const checkAuthStatus = async () => {
-			try {
-				const authStatus = await authAPI.checkAuth();
-				setIsAuthenticated(!!authStatus);
-			} catch (error) {
-				console.log("Not authenticated:", error);
-				setIsAuthenticated(false);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		checkAuthStatus();
-	}, []);
 
 	const handleLoginSuccess = () => {
 		setIsAuthenticated(true);
@@ -37,15 +20,10 @@ function App() {
 			await authAPI.logout();
 			console.log("Logout successful");
 			setIsAuthenticated(false);
-			window.location.reload();
 		} catch (error) {
 			console.error("Logout error:", error);
 		}
 	};
-
-	if (isLoading) {
-		return <div className="loading">Loading...</div>;
-	}
 
 	return (
 		<div className="app-container">

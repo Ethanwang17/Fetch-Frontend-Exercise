@@ -9,7 +9,6 @@ function LoginPage({onLoginSuccess}) {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [error, setError] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -19,40 +18,16 @@ function LoginPage({onLoginSuccess}) {
 		}
 
 		setError("");
-		setIsLoading(true);
 
 		try {
-			// Clear any existing cookies that might be interfering
-			document.cookie.split(";").forEach(function (c) {
-				document.cookie = c
-					.replace(/^ +/, "")
-					.replace(
-						/=.*/,
-						"=;expires=" + new Date().toUTCString() + ";path=/"
-					);
-			});
-
 			await authAPI.login({name, email});
 
-			// Force a small delay to ensure cookies are set
-			setTimeout(() => {
-				if (onLoginSuccess) {
-					onLoginSuccess();
-				}
-				setIsLoading(false);
-			}, 300);
+			if (onLoginSuccess) {
+				onLoginSuccess();
+			}
 		} catch (err) {
 			console.error("Authentication error:", err);
-			let errorMessage = "Authentication failed";
-
-			if (err.status === 401) {
-				errorMessage = "Invalid credentials. Please try again.";
-			} else if (err.message) {
-				errorMessage = `${errorMessage}: ${err.message}`;
-			}
-
-			setError(errorMessage);
-			setIsLoading(false);
+			setError(`Authentication failed: ${err.message}`);
 		}
 	};
 
@@ -100,19 +75,9 @@ function LoginPage({onLoginSuccess}) {
 						/>
 					</div>
 
-					<button
-						type="submit"
-						className="submit-button"
-						disabled={isLoading}
-					>
-						{isLoading ? "Signing in..." : "Get Started"}
+					<button type="submit" className="submit-button">
+						Get Started
 					</button>
-
-					{/* Cross-browser note */}
-					<p className="browser-note">
-						Note: For best experience, please allow cookies in your
-						browser.
-					</p>
 				</form>
 			</div>
 		</div>

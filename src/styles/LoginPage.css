@@ -121,24 +121,3 @@ input[type="text"] {
 	margin-bottom: 15px;
 	font-size: 0.9rem;
 }
-
-.browser-note {
-	font-size: 0.8rem;
-	color: #777;
-	margin-top: 15px;
-	font-style: italic;
-}
-
-.submit-button:disabled {
-	background-color: #6c757d;
-	cursor: not-allowed;
-}
-
-.loading {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	font-size: 1.5rem;
-	color: #555;
-}
